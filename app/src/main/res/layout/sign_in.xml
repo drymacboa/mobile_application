@@ -2,122 +2,117 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/bgImage"
-        android:layout_width="264dp"
-        android:layout_height="218dp"
-        android:scaleType="centerInside"
+        android:layout_width="340dp"
+        android:layout_height="340dp"
+        android:contentDescription="@string/background_image_description"
+        android:scaleType="centerCrop"
         android:src="@drawable/background"
-        app:layout_constraintBottom_toTopOf="@+id/dividerView"
+        app:layout_constraintBottom_toTopOf="@+id/btnNext"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.5"
-        app:layout_constraintHorizontal_bias="0.624"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/dividerView"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="#DADADA"
-        app:layout_constraintTop_toBottomOf="@id/bgImage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.303" />
 
     <TextView
         android:id="@+id/tvWelcomeBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="268dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/welcome_back"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:fontFamily="@font/montserrat"
-        app:layout_constraintTop_toBottomOf="@id/dividerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.544"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvSignInPrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sign_in_prompt"
-        android:textColor="@color/black"
-        android:textSize="18sp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/montserrat"
-        android:layout_marginTop="10dp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack"
+        android:text="@string/sign_in_prompt"
+        android:textColor="#757575"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack" />
 
-    <EditText
-        android:id="@+id/etEmail"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@drawable/edit_text_shape"
-        android:drawableEnd="@drawable/mail"
-        android:hint="@string/enter_email"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:inputType="textEmailAddress"
-        android:autofillHints="emailAddress"
+    <!-- Email Input Field -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilEmail"
+        style="@style/AppTheme.TextInputLayout"
+        app:startIconDrawable="@drawable/mail"
         app:layout_constraintTop_toBottomOf="@id/tvSignInPrompt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.8"
-        android:layout_marginTop="20dp" />
+        app:layout_constraintWidth_percent="0.8">
 
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@drawable/edit_text_shape"
-        android:drawableEnd="@drawable/lock"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:autofillHints="password"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/etEmail"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_email"
+            android:inputType="textEmailAddress"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPassword"
+        style="@style/AppTheme.TextInputLayout"
+        app:startIconDrawable="@drawable/lock"
+        app:passwordToggleEnabled="true"
+        app:layout_constraintTop_toBottomOf="@id/tilEmail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.8"
-        android:layout_marginTop="20dp" />
+        app:layout_constraintWidth_percent="0.8">
 
-    <CheckBox
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/cbRememberMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/remember_me"
-        app:layout_constraintStart_toStartOf="@id/etPassword"
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
-        android:layout_marginTop="10dp" />
+        app:layout_constraintStart_toStartOf="@id/tilPassword"
+        app:layout_constraintTop_toBottomOf="@id/tilPassword" />
 
     <TextView
         android:id="@+id/tvForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_width="140dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:minHeight="48dp"
         android:text="@string/forgot_password"
-        android:textColor="#6C63FF"
-        app:layout_constraintEnd_toEndOf="@id/etPassword"
-        app:layout_constraintTop_toBottomOf="@id/etPassword" />
+        android:textColor="#6200EE"
+        app:layout_constraintEnd_toEndOf="@id/tilPassword"
+        app:layout_constraintTop_toBottomOf="@id/cbRememberMe" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNext"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="108dp"
-        android:background="@drawable/button_shape"
+        style="@style/AppTheme.Button"
         android:text="@string/next2"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvForgotPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.8" />
 
     <TextView
@@ -129,6 +124,6 @@
         app:layout_constraintTop_toBottomOf="@id/btnNext"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
