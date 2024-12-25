@@ -12,14 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Assignment_mob_app"
         tools:targetApi="31">
+
         <activity
-            android:name=".RegisterActivity"
+            android:name=".CreateAccountActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
-        <!-- Launcher activity with android:exported attribute -->
+        </activity> <!-- Launcher activity with android:exported attribute -->
         <activity
             android:name=".SignInActivity"
             android:exported="true">
@@ -28,10 +28,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Additional activity without an intent filter, so android:exported is optional -->
-        <activity
-            android:name=".CreateAccountActivity"
-            android:exported="false" />
+        </activity>
     </application>
 
 </manifest>
