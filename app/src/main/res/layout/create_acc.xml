@@ -58,7 +58,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilFullName"
         style="@style/AppTheme.TextInputLayout"
-        app:startIconDrawable="@drawable/user"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/user"
         app:layout_constraintTop_toBottomOf="@id/tvGetStarted2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -74,7 +75,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilEmail"
         style="@style/AppTheme.TextInputLayout"
-        app:startIconDrawable="@drawable/mail"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/mail"
         app:layout_constraintTop_toBottomOf="@id/tilFullName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -90,7 +92,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilPhoneNumber"
         style="@style/AppTheme.TextInputLayout"
-        app:startIconDrawable="@drawable/smartphone"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/smartphone"
         app:layout_constraintTop_toBottomOf="@id/tilEmail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -106,7 +109,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilPassword"
         style="@style/AppTheme.TextInputLayout"
-        app:startIconDrawable="@drawable/lock"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/lock"
         app:layout_constraintTop_toBottomOf="@id/tilPhoneNumber"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
