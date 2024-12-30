@@ -2,45 +2,55 @@ package com.example.assignment_mob_app
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textfield.TextInputEditText
 
-class SignInActivity : AppCompatActivity() {
-    // Views as properties using custom getters
+class SignInFragment : Fragment() {
+    private lateinit var credentialsManager: CredentialsManager
+
+    // Views
     private val emailLayout: TextInputLayout by lazy {
-        findViewById(R.id.tilEmail)
+        requireView().findViewById(R.id.tilEmail)
     }
     private val passwordLayout: TextInputLayout by lazy {
-        findViewById(R.id.tilPassword)
+        requireView().findViewById(R.id.tilPassword)
     }
     private val emailInput: TextInputEditText by lazy {
-        findViewById(R.id.etEmail)
+        requireView().findViewById(R.id.etEmail)
     }
     private val passwordInput: TextInputEditText by lazy {
-        findViewById(R.id.etPassword)
+        requireView().findViewById(R.id.etPassword)
     }
     private val nextButton: MaterialButton by lazy {
-        findViewById(R.id.btnNext)
+        requireView().findViewById(R.id.btnNext)
     }
     private val registerNowText: TextView by lazy {
-        findViewById(R.id.tvRegisterNow)
+        requireView().findViewById(R.id.tvRegisterNow)
     }
 
-    // CredentialsManager instance
-    private val credentialsManager = CredentialsManager()
-
-    // Hardcoded credentials
     companion object {
-        const val VALID_EMAIL = "test@te.st"
-        const val VALID_PASSWORD = "1234"
+        fun newInstance() = SignInFragment()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.sign_in)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_sign_in, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Get the shared CredentialsManager instance from MainActivity
+        credentialsManager = (requireActivity() as MainActivity).getCredentialsManager()
 
         setupClickListeners()
     }
@@ -76,24 +86,19 @@ class SignInActivity : AppCompatActivity() {
         }
 
         // Check credentials
-        if (email == VALID_EMAIL && password == VALID_PASSWORD) {
-            navigateToMain()
+        if (credentialsManager.login(email, password)) {
+            // Success - you can replace this with navigation to your main app content
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+            requireActivity().finish()
         } else {
             passwordLayout.error = "Invalid email or password"
         }
     }
 
-    private fun navigateToMain() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
-        finish()
-    }
-
     private fun navigateToCreateAccount() {
-        val intent = Intent(this, CreateAccountActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
-        finish()
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, CreateAccountFragment.newInstance())
+            .addToBackStack(null)
+            .commit()
     }
 }

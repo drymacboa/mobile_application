@@ -1,7 +1,7 @@
 package com.example.assignment_mob_app
 
 import android.view.View
-import androidx.test.core.app.ActivityScenario
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -12,11 +12,11 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.android.material.textfield.TextInputLayout
 
 @RunWith(AndroidJUnit4::class)
-class CreateAccountActivityTest {
+class CreateAccountFragmentTest {
 
     @Test
     fun invalidEmailShowsError() {
-        ActivityScenario.launch(CreateAccountActivity::class.java).use {
+        launchFragmentInContainer<CreateAccountFragment>().use { scenario ->
             // Fill in valid data except email
             onView(withId(R.id.etFullName)).perform(typeText("John Doe"), closeSoftKeyboard())
             onView(withId(R.id.etEmail)).perform(typeText("invalid-email"), closeSoftKeyboard())
@@ -31,7 +31,7 @@ class CreateAccountActivityTest {
 
     @Test
     fun missingFullNameShowsError() {
-        ActivityScenario.launch(CreateAccountActivity::class.java).use {
+        launchFragmentInContainer<CreateAccountFragment>().use { scenario ->
             onView(withId(R.id.etEmail)).perform(typeText("test@example.com"), closeSoftKeyboard())
             onView(withId(R.id.etPhoneNumber)).perform(typeText("1234567890"), closeSoftKeyboard())
             onView(withId(R.id.etPassword)).perform(typeText("password123"), closeSoftKeyboard())
@@ -44,7 +44,7 @@ class CreateAccountActivityTest {
 
     @Test
     fun successfulRegistrationNavigatesToSignIn() {
-        ActivityScenario.launch(CreateAccountActivity::class.java).use {
+        launchFragmentInContainer<CreateAccountFragment>().use { scenario ->
             onView(withId(R.id.etFullName)).perform(typeText("John Doe"), closeSoftKeyboard())
             onView(withId(R.id.etEmail)).perform(typeText("john@example.com"), closeSoftKeyboard())
             onView(withId(R.id.etPhoneNumber)).perform(typeText("1234567890"), closeSoftKeyboard())
@@ -52,9 +52,9 @@ class CreateAccountActivityTest {
             onView(withId(R.id.cbTermsAndConditions)).perform(click())
             onView(withId(R.id.btnNext)).perform(click())
 
-            // Activity should finish
-            it.onActivity { activity ->
-                assert(activity.isFinishing)
+            // Check if fragment is destroyed after successful registration
+            scenario.onFragment { fragment ->
+                assert(fragment.isDetached)
             }
         }
     }

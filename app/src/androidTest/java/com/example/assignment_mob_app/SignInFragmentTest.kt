@@ -1,7 +1,7 @@
 package com.example.assignment_mob_app
 
 import android.view.View
-import androidx.test.core.app.ActivityScenario
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -12,56 +12,48 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.android.material.textfield.TextInputLayout
 
 @RunWith(AndroidJUnit4::class)
-class SignInActivityTest {
+class SignInFragmentTest {
 
     @Test
     fun invalidEmailShowsError() {
-        ActivityScenario.launch(SignInActivity::class.java).use {
-            // Enter invalid email
+        launchFragmentInContainer<SignInFragment>().use { scenario ->
             onView(withId(R.id.etEmail)).perform(typeText("invalid-email"), closeSoftKeyboard())
             onView(withId(R.id.btnNext)).perform(click())
 
-            // Check if error is displayed
             onView(withId(R.id.tilEmail)).check(matches(hasError("Please enter a valid email address")))
         }
     }
 
     @Test
     fun emptyPasswordShowsError() {
-        ActivityScenario.launch(SignInActivity::class.java).use {
-            // Enter valid email but no password
+        launchFragmentInContainer<SignInFragment>().use { scenario ->
             onView(withId(R.id.etEmail)).perform(typeText("test@te.st"), closeSoftKeyboard())
             onView(withId(R.id.btnNext)).perform(click())
 
-            // Check if error is displayed
             onView(withId(R.id.tilPassword)).check(matches(hasError("Please enter a password")))
         }
     }
 
     @Test
     fun validCredentialsNavigatesToMain() {
-        ActivityScenario.launch(SignInActivity::class.java).use {
-            // Enter valid credentials
+        launchFragmentInContainer<SignInFragment>().use { scenario ->
             onView(withId(R.id.etEmail)).perform(typeText("test@te.st"), closeSoftKeyboard())
             onView(withId(R.id.etPassword)).perform(typeText("1234"), closeSoftKeyboard())
             onView(withId(R.id.btnNext)).perform(click())
 
-            // Activity should finish (we can't easily test if MainActivity started)
-            it.onActivity { activity ->
-                assert(activity.isFinishing)
+            scenario.onFragment { fragment ->
+                assert(fragment.isDetached)
             }
         }
     }
 
     @Test
     fun invalidCredentialsShowsError() {
-        ActivityScenario.launch(SignInActivity::class.java).use {
-            // Enter invalid credentials
+        launchFragmentInContainer<SignInFragment>().use { scenario ->
             onView(withId(R.id.etEmail)).perform(typeText("test@te.st"), closeSoftKeyboard())
             onView(withId(R.id.etPassword)).perform(typeText("wrong-password"), closeSoftKeyboard())
             onView(withId(R.id.btnNext)).perform(click())
 
-            // Check if error is displayed
             onView(withId(R.id.tilPassword)).check(matches(hasError("Invalid email or password")))
         }
     }
