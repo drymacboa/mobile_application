@@ -20,5 +20,8 @@
     <string name="already_member">Already a member?<font color="#6C63FF">Log in</font></string>
 
     <string name="background_image_description">Background Image</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>
